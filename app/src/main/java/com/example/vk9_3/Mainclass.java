@@ -48,9 +48,6 @@ public class Mainclass {
                     String name = element.getElementsByTagName("Name").item(0).getTextContent();
 
                     arrayList.add(new Theaterinfo(name, ID)); //lisätään olio listalle
-                    /*if(i>0){ // ei lisätä tietoja "Valitse alue/teatteri"
-
-                    }*/
 
                 }
 

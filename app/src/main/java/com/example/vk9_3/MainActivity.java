@@ -50,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
         readXML();
         calendarView();
         spinner();
-        //listView();
-        //editText();
+        editText();
 
     }
 
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
     public void listView(ArrayList<String> arrayList2){
         adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList2);
         listView.setAdapter(adapter2);
-        editText();
     }
 
 
