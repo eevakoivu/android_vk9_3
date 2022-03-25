@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<Theaterinfo> adapter = null;
     ArrayAdapter<String> adapter2 = null;
     ArrayList<Theaterinfo> arrayList = null;
+    ArrayList<String> arrayList2 = null;
+
+    Mainclass mainclass = new Mainclass();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
 
         readXML();
-        spinner();
         calendarView();
-        listView();
-        editText();
+        spinner();
+        //listView();
+        //editText();
 
     }
 
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                readmoviesXML(i); //viedään tieto kuinka mones olio adapterissa/arrayListissa
             }
 
             @Override
@@ -99,9 +102,10 @@ public class MainActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-    public void listView(){
-        adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, movies);
+    public void listView(ArrayList<String> arrayList2){
+        adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList2);
         listView.setAdapter(adapter2);
+        editText();
     }
 
 
@@ -126,8 +130,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void readXML(){
         arrayList = new ArrayList<Theaterinfo>();
-        Mainclass mainclass = new Mainclass();
         arrayList = mainclass.readXML();
     }
+
+    public void readmoviesXML(int i){
+        arrayList2 = new ArrayList<String>();
+        arrayList2 = mainclass.readmoviesXML(arrayList.get(i),day,month,year);  //viedään haluttu olio
+        listView(arrayList2);
+    }
+
+
 
 }

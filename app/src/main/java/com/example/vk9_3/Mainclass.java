@@ -47,9 +47,10 @@ public class Mainclass {
                     int ID = Integer.valueOf(element.getElementsByTagName("ID").item(0).getTextContent());
                     String name = element.getElementsByTagName("Name").item(0).getTextContent();
 
-                    if(i>0){ // ei lisätä tietoja "Valitse alue/teatteri"
-                        arrayList.add(new Theaterinfo(name, ID)); //lisätään olio listalle
-                    }
+                    arrayList.add(new Theaterinfo(name, ID)); //lisätään olio listalle
+                    /*if(i>0){ // ei lisätä tietoja "Valitse alue/teatteri"
+
+                    }*/
 
                 }
 
@@ -66,35 +67,33 @@ public class Mainclass {
         return arrayList;
     }
 
-    public void readmoviesXML(int did ) {
+    public ArrayList<String> readmoviesXML(Theaterinfo theater, int day, int month, int year) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        ArrayList<Theaterinfo> arrayList = null;
+        ArrayList<String> arrayList = null;
 
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            String urlString = "https://www.finnkino.fi/xml/Schedule/?area="+arrayList.get(id).getID()+"&dt=pp.kk.vvvv";
+            String urlString = "https://www.finnkino.fi/xml/Schedule/?area="+theater.getID()+"&dt="+day+"."+month+"."+year;
             Document doc = builder.parse(urlString);
             doc.getDocumentElement().normalize();
-            //System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
+            System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
 
-            NodeList nList = doc.getDocumentElement().getElementsByTagName("TheatreArea");
 
-            arrayList = new ArrayList<Theaterinfo>(); //luodaan lista olioista
+            NodeList nList = doc.getDocumentElement().getElementsByTagName("Show");
+
+            arrayList = new ArrayList<String>(); //luodaan lista elokuvista
 
             for(int i=0; i<nList.getLength(); i++){
-                Node node = nList.item(i); //yhden teatterin tiedot
+                Node node = nList.item(i); //yhden elokuvan tiedot
 
                 if(node.getNodeType() == Node.ELEMENT_NODE){
                     Element element = (Element) node;
 
-                    int ID = Integer.valueOf(element.getElementsByTagName("ID").item(0).getTextContent());
-                    String name = element.getElementsByTagName("Name").item(0).getTextContent();
+                    String name = element.getElementsByTagName("Title").item(0).getTextContent();
 
-                    if(i>0){ // ei lisätä tietoja "Valitse alue/teatteri"
-                        arrayList.add(new Theaterinfo(name, ID)); //lisätään olio listalle
-                    }
+                    arrayList.add(name); //lisätään olio listalle
 
                 }
 
